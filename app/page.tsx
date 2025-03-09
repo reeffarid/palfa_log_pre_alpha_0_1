@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import { buttonVariants } from "@/components/ui/button";
 
+export interface Props {
+  term: string;
+}
 
 export default function Home() {
   return (

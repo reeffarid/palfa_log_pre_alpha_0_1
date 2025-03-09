@@ -435,8 +435,8 @@ export default function GeotechnicalPage() {
                       <Command>
                         <CommandInput placeholder="Search lithology type..." />
                         <CommandEmpty>No lithology found.</CommandEmpty>
-                        <CommandGroup>
-                          <CommandList>
+                        <CommandList>
+                          <CommandGroup>
                             {Lithology_Types.map((type) => (
                               <CommandItem
                                 value={type.label}
@@ -456,8 +456,8 @@ export default function GeotechnicalPage() {
                                 {type.label}
                               </CommandItem>
                             ))}
-                          </CommandList>
-                        </CommandGroup>
+                          </CommandGroup>
+                        </CommandList>
                       </Command>
                     </PopoverContent>
                   </Popover>

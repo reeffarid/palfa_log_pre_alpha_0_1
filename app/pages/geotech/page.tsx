@@ -442,7 +442,7 @@ export default function GeotechnicalPage() {
                           <CommandGroup>
                             {Lithology_Types.map((type) => (
                               <CommandItem
-                                value={type.label}
+                                value={type.value}
                                 key={type.value}
                                 onSelect={() => {
                                   form.setValue("Lithology_Type", type.value);

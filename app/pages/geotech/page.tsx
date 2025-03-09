@@ -40,8 +40,8 @@ export interface Props {
 // Esquema del formulario
 const formSchema = z.object({
   Project_ID: z.string(),
-  Hole_ID: z.string().min(10),
-  Logged_By: z.string().min(10),
+  Hole_ID: z.string().min(3),
+  Logged_By: z.string().min(3),
   Core_Diameter: z.string(),
   Depth_From: z.number().min(0),
   Depth_To: z.number().min(0),

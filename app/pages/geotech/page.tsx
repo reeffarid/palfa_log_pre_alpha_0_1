@@ -1047,7 +1047,10 @@ export default function GeotechnicalPage() {
     <FormItem>
       <FormLabel>FF</FormLabel>
       <FormControl>
-        <Input placeholder="FF" {...field} />
+        <Input placeholder="0" 
+        type="number" 
+        {...field}
+        onChange={(e) => field.onChange(e.target.valueAsNumber)} />
       </FormControl>
       <FormMessage />
     </FormItem>

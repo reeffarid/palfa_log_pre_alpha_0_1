@@ -38,27 +38,35 @@ import { useRouter } from "next/navigation";
 const formSchema = z.object({
   Project_ID: z.string(),
   Hole_ID: z.string().min(10),
-  Logged_By: z.string().min(10),
-  Core_Diameter: z.string(),
   Depth_From: z.number(),
   Depth_To: z.number(),
-  Length: z.number(),
-  CL: z.number(),
   Lithology_Type: z.string(), //  Lithology_Type
-  Weathering_Type: z.string(), //  Weathering_Type
-  Natural_Break_Count: z.number(), //Natural_Break_Count
-  Broken_Zone_Count: z.number(), //Broken_Zone_Count
-  Core_10: z.number(),
-  RQD: z.number(),
-  Discontinuity_Type: z.string(),
-  Joint_Set_Count: z.string(),
-  Roughness: z.string(),
-  Joint_SSHR: z.string(),
-  Infill: z.string(),
-  Infill_thickness: z.string(),
-  QSI: z.string(),
-  Commentaries: z.string(),
-  FF: z.number(),
+  Qz_Vt: z.number(), //  Weathering_Type
+  Qz_Alt: z.number(), //Natural_Break_Count
+  Sulphides: z.number(), //Broken_Zone_Count
+  Bleaching: z.number(),
+  Carbonates: z.number(),
+  Limonites: z.number(),
+  Sulphides_As: z.number(),
+  Sulphides_Py: z.number(),
+  Sulphides_Sp: z.number(),
+  Sulphides_Cpy: z.number(),
+  Sulphides_Po: z.number(),
+  Sulphides_Undiff: z.number(),
+  Bleaching_Cly: z.number(),
+  Bleaching_Ser: z.number(),
+  Bleaching_Alb: z.number(),
+  Silicification: z.number(),
+  Veinlets_Qz_Po: z.number(),
+  Veinlets_Qz_Py: z.number(),
+  Veinlets_Py_As: z.number(),
+  Veinlets_Qz_Su: z.number(),
+  Veinlets_Ca: z.number(),
+  Veinlets_Qz_Ca: z.number(),
+  Veinlets_Sulf: z.number(),
+  Veinlets_Qz_Undiff: z.number(),
+  Veinlets_Bt: z.number(),
+  Comments: z.string(),
 });
 
 // Opciones para el tipo de estructura
@@ -121,8 +129,10 @@ const Lithology_Types = [
   { value: "SHZN", label: "SHZN" },
   { value: "SOIL", label: "SOIL" },
   { value: "SPHY", label: "SPHY" },
+  { value: "SPL", label: "SPL" },
   { value: "SUBX", label: "SUBX" },
   { value: "SUVN", label: "SUVN" },
+  { value: "SVC", label: "SVC" },
   { value: "SVCL", label: "SVCL" },
   { value: "VALT", label: "VALT" },
   { value: "VAND", label: "VAND" },
@@ -134,117 +144,42 @@ const Lithology_Types = [
 ] as const;
 
 
-// Opciones para el tipo de texture
-const Weathering_Types = [
-  { value: "CW", label: "CW" },
-  { value: "HW", label: "HW" },
-  { value: "MW", label: "MW" },
-  { value: "SW", label: "SW" },
-  { value: "FR", label: "FR" },
-] as const;
 
-
-// Opciones para el tipo de discontinuidad
-
-const Discontinuity_Types = [
-  { value: "JOI", label: "JOI" },
-  { value: "CON", label: "CON" },
-  { value: "ZON", label: "ZON" },
-  { value: "FOL", label: "FOL" },
-  { value: "BED", label: "BED" },
-  { value: "VEI", label: "VEI" },
-  { value: "DIS", label: "DIS" },
-  { value: "OXI", label: "OXI" },
-  { value: "SAP", label: "SAP" },
-  { value: "DSC", label: "DSC" },
-] as const;
-
-const JointSetCount_Types = [
-  { value: "0", label: "0" },
-  { value: "0.5", label: "0.5" },
-  { value: "1", label: "1" },
-  { value: "1.5", label: "1.5" },
-  { value: "2", label: "2" },
-  { value: "2.5", label: "2.5" },
-  { value: "3", label: "3" },
-  { value: "3.5", label: "3.5" },
-  { value: "4", label: "4" },
-  { value: "5", label: "5" },
-] as const;
-
-
-// Opciones Roughness_types
-const Roughness_Types = [
-  { value: "RAD", label: "RAD" },
-  { value: "SMD", label: "SMD" },
-  { value: "SSD", label: "SSD" },
-  { value: "RAU", label: "RAU" },
-  { value: "SMU", label: "SMU" },
-  { value: "SSU", label: "SSU" },
-  { value: "RAP", label: "RAP" },
-  { value: "SMP", label: "SMP" },
-  { value: "SSP", label: "SSP" },
-  { value: "GPU", label: "GPU" },
-] as const;
-
-// Opciones Infill_Types
-const Infill_Types = [
-  { value: "BAD", label: "BAD" },
-  { value: "MOD", label: "MOD" },
-  { value: "NON", label: "NON" },
-  { value: "SLI", label: "SLI" },
-  { value: "SOF", label: "SOF" },
-  { value: "UNA", label: "UNA" },
-] as const;
-
-// Opciones Infill_Thickness_Types
-const Infill_Thickness_Types = [
-  { value: "NWC", label: "NWC" },
-  { value: "t<1", label: "t<1" },
-  { value: "t<5", label: "t<5" },
-  { value: "t>5", label: "t>5" },
-] as const;
-
-// Opciones QSI_Types
-
-const QSI_Types = [
-  { value: "C", label: "C" },
-  { value: "R0", label: "R0" },
-  { value: "R1", label: "R1" },
-  { value: "R2", label: "R2" },
-  { value: "R3", label: "R3" },
-  { value: "R4", label: "R4" },
-  { value: "R5", label: "R5" },
-  { value: "R6", label: "R6" },
-] as const;
-
-
-export default function StructuralPage() {
+export default function ReloggingPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       Project_ID: "",
       Hole_ID: "",
-      Logged_By: "",
-      Core_Diameter: "",
       Depth_From: 0,
       Depth_To: 0,
-      Length: 0,
       Lithology_Type: "", // Valor inicial vacío
-      Weathering_Type: "", // Valor inicial vacío
-      Natural_Break_Count: 0, // Valor inicial vacío
-      Broken_Zone_Count: 0, // Valor inicial vacío
-      Core_10: 0, // Valor inicial vacío
-      RQD: 0,
-      Discontinuity_Type: "",
-      Joint_Set_Count: "",
-      Roughness: "",
-      Joint_SSHR: "",
-      Infill: "",
-      Infill_thickness: "",
-      QSI: "",
-      Commentaries: "",
-      FF: 0,
+      Qz_Vt: 0, // Valor inicial vacío
+      Qz_Alt: 0, // Valor inicial vacío
+      Sulphides: 0, // Valor inicial vacío
+      Bleaching: 0, // Valor inicial vacío
+      Carbonates: 0,
+      Limonites: 0,
+      Sulphides_As: 0,
+      Sulphides_Py: 0,
+      Sulphides_Sp: 0,
+      Sulphides_Cpy: 0,
+      Sulphides_Po: 0,
+      Sulphides_Undiff: 0,
+      Bleaching_Cly: 0,
+      Bleaching_Ser: 0,
+      Bleaching_Alb: 0,
+      Silicification: 0,
+      Veinlets_Qz_Po: 0,
+      Veinlets_Qz_Py: 0,
+      Veinlets_Py_As: 0,
+      Veinlets_Qz_Su: 0,
+      Veinlets_Ca: 0,
+      Veinlets_Qz_Ca: 0,
+      Veinlets_Sulf: 0,
+      Veinlets_Qz_Undiff: 0,
+      Veinlets_Bt: 0,
+      Comments: "",
     },
   });
 
@@ -261,6 +196,8 @@ export default function StructuralPage() {
       <div>
       
         <Form {...form}>
+
+      <h1>asd</h1>
 
         <FormField
         control={form.control}
@@ -305,36 +242,6 @@ export default function StructuralPage() {
               )}
             />
 
-            {/* Campo Logged By */}
-            <FormField
-              control={form.control}
-              name="Logged_By"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Logged By</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Logged By" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Campo Core_Diameter */}
-            <FormField
-              control={form.control}
-              name="Core_Diameter"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Core Diameter</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Core Diameter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* Campo Depth From */}
             <FormField
               control={form.control}
@@ -362,26 +269,6 @@ export default function StructuralPage() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>To</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="0"
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Campo Length */}
-            <FormField
-              control={form.control}
-              name="Length"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Length</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="0"
@@ -457,77 +344,16 @@ export default function StructuralPage() {
               )}
             />
 
-
-              {/* Campo Weathering_Types con Popover */}
-          <FormField
-            control={form.control}
-            name="Weathering_Type"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Weathering</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "w-[200px] justify-between",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value
-                          ? Weathering_Types.find(
-                              (type) => type.value === field.value
-                            )?.label
-                          : "Select Weathering"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
-                    <Command>
-                      <CommandInput placeholder="Search weathering type..." />
-                      <CommandEmpty>No weathering found.</CommandEmpty>
-                      <CommandGroup>
-                        <CommandList>
-                          {Weathering_Types.map((type) => (
-                            <CommandItem
-                              value={type.label}
-                              key={type.value}
-                              onSelect={() => {
-                                form.setValue("Weathering_Type", type.value);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  type.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {type.label}
-                            </CommandItem>
-                          ))}
-                        </CommandList>
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <h1>spltit</h1>
 
             {/* Campo Natural_Break_Count */}
 
             <FormField
               control={form.control}
-              name="Natural_Break_Count"
+              name="Qz_Vt"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Natural Break Count</FormLabel>
+                  <FormLabel>Vt</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="0"
@@ -540,478 +366,9 @@ export default function StructuralPage() {
                 </FormItem>
               )}
             />
-
-            {/* Campo Broken_Zone_Count */}
-
             <FormField
               control={form.control}
-              name="Broken_Zone_Count"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Broken Zone Count</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="0"
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Campo Core > 10cm */}
-
-            <FormField
-              control={form.control}
-              name="Core_10"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Core {'>'} 10 cm</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="0"
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Campo RQD */}
-
-            <FormField
-              control={form.control}
-              name="RQD"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>RQD count {'(check)'}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="0"
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-
-            {/* Campo Discontinuity_Types con Popover */}
-        <FormField
-          control={form.control}
-          name="Discontinuity_Type"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Discontinuity Type</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-[200px] justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value
-                        ? Discontinuity_Types.find(
-                            (type) => type.value === field.value
-                          )?.label
-                        : "Select Discontinuity Type"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search discontinuity type..." />
-                    <CommandEmpty>No discontinuity type found.</CommandEmpty>
-                    <CommandGroup>
-                      <CommandList>
-                        {Discontinuity_Types.map((type) => (
-                          <CommandItem
-                            value={type.label}
-                            key={type.value}
-                            onSelect={() => {
-                              form.setValue("Discontinuity_Type", type.value);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                type.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {type.label}
-                          </CommandItem>
-                        ))}
-                      </CommandList>
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Campo Joint Set Count con Popover */}
-        <FormField
-          control={form.control}
-          name="Joint_Set_Count"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Joint Set Count</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-[200px] justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value
-                        ? JointSetCount_Types.find(
-                            (type) => type.value === field.value
-                          )?.label
-                        : "Select Joint Set Count Type"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search joint set count type..." />
-                    <CommandEmpty>No joint set count type found.</CommandEmpty>
-                    <CommandGroup>
-                      <CommandList>
-                        {JointSetCount_Types.map((type) => (
-                          <CommandItem
-                            value={type.label}
-                            key={type.value}
-                            onSelect={() => {
-                              form.setValue("Joint_Set_Count", type.value);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                type.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {type.label}
-                          </CommandItem>
-                        ))}
-                      </CommandList>
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-            {/* Campo Roughness con Popover */}
-            <FormField
-              control={form.control}
-              name="Roughness"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Roughness</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-[200px] justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? Roughness_Types.find(
-                                (type) => type.value === field.value
-                              )?.label
-                            : "Select Roughness"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Search roughness..." />
-                        <CommandEmpty>No roughness found.</CommandEmpty>
-                        <CommandGroup>
-                          <CommandList>
-                            {Roughness_Types.map((type) => (
-                              <CommandItem
-                                value={type.label}
-                                key={type.value}
-                                onSelect={() => {
-                                  form.setValue("Roughness", type.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    type.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {type.label}
-                              </CommandItem>
-                            ))}
-                          </CommandList>
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Joint Surface Strength to Host Rock */}
-          <FormField
-          control={form.control}
-          name="Joint_SSHR"
-          render={({ field }) => (
-                <FormItem className="space-y-3">
-                <FormLabel>Joint Surface Strength to Host Rock</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-col space-y-1"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="1" id="one" />
-                      <Label htmlFor="one">1</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="2" id="two" />
-                      <Label htmlFor="two">2</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="3" id="three" />
-                      <Label htmlFor="three">3</Label>
-                    </div>
-                    </RadioGroup>
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-              )}
-              />
-
-            {/* Campo Infil con Popover */}
-            <FormField
-              control={form.control}
-              name="Infill"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Infill</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-[200px] justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? Infill_Types.find(
-                                (type) => type.value === field.value
-                              )?.label
-                            : "Select Infill"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Search infill..." />
-                        <CommandEmpty>No infill found.</CommandEmpty>
-                        <CommandGroup>
-                          <CommandList>
-                            {Infill_Types.map((type) => (
-                              <CommandItem
-                                value={type.label}
-                                key={type.value}
-                                onSelect={() => {
-                                  form.setValue("Infill", type.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    type.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {type.label}
-                              </CommandItem>
-                            ))}
-                          </CommandList>
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Campo Infill_Thickness con Popover */}
-            <FormField
-              control={form.control}
-              name="Infill_thickness"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Infill Thickness</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-[200px] justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? Infill_Thickness_Types.find(
-                                (type) => type.value === field.value
-                              )?.label
-                            : "Select Infill Thickness"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Search infill thickness..." />
-                        <CommandEmpty>No infill thickness found.</CommandEmpty>
-                        <CommandGroup>
-                          <CommandList>
-                            {Infill_Thickness_Types.map((type) => (
-                              <CommandItem
-                                value={type.label}
-                                key={type.value}
-                                onSelect={() => {
-                                  form.setValue("Infill_thickness", type.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    type.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {type.label}
-                              </CommandItem>
-                            ))}
-                          </CommandList>
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Campo QSI_Types con Popover */}
-            <FormField
-              control={form.control}
-              name="QSI"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>QSI - Quality Strength Index</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-[200px] justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? QSI_Types.find(
-                                (type) => type.value === field.value
-                              )?.label
-                            : "Select QSI"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Search QSI..." />
-                        <CommandEmpty>No QSI found.</CommandEmpty>
-                        <CommandGroup>
-                          <CommandList>
-                            {QSI_Types.map((type) => (
-                              <CommandItem
-                                value={type.label}
-                                key={type.value}
-                                onSelect={() => {
-                                  form.setValue("QSI", type.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    type.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {type.label}
-                              </CommandItem>
-                            ))}
-                          </CommandList>
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="Commentaries"
+              name="Comments"
               render={({ field }) => (
             <FormItem>
             <FormLabel>Commentaries</FormLabel>
@@ -1025,21 +382,6 @@ export default function StructuralPage() {
             <FormMessage />
          </FormItem>
         )}
-/>
-
-{/* Campo FF */}
-<FormField
-  control={form.control}
-  name="FF"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>FF</FormLabel>
-      <FormControl>
-        <Input placeholder="FF" {...field} />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
 />
 
             {/* Botón de envío */}

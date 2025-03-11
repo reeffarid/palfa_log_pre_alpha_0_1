@@ -41,7 +41,7 @@ const formSchema = z.object({
   Depth_From: z.number(),
   Depth_To: z.number(),
   Lithology_Type: z.string(), //  Lithology_Type
-  Qz_Vt: z.number(), //  Weathering_Type
+  Qz_Vt: z.number().min(0).max(10), //  Weathering_Type
   Qz_Alt: z.number(), //Natural_Break_Count
   Sulphides: z.number(), //Broken_Zone_Count
   Bleaching: z.number(),

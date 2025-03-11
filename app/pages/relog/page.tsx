@@ -348,7 +348,7 @@ export default function ReloggingPage() {
               <h1>QZ</h1>
               <hr></hr>
 
-            {/* Campo Natural_Break_Count */}
+            {/* Campo QZ */}
 
             <FormField
               control={form.control}
@@ -368,6 +368,492 @@ export default function ReloggingPage() {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="Qz_Alt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Alt</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="0"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+              <hr></hr>
+
+              <FormField
+              control={form.control}
+              name="Sulphides"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Sulphides</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="0"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+            control={form.control}
+            name="Bleaching"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bleaching</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    {...field}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+          control={form.control}
+          name="Carbonates"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Carbonates</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="0"
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+        control={form.control}
+        name="Limonites"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Limonites</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="0"
+                type="number"
+                {...field}
+                onChange={(e) => field.onChange(e.target.valueAsNumber)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+          <hr></hr>
+
+
+            <h1> SULPHIDES %</h1>
+
+            <hr></hr>
+
+                <FormField
+                control={form.control}
+                name="Sulphides_As"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>As</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+                    <FormField
+                    control={form.control}
+                    name="Sulphides_Py"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Py</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                  control={form.control}
+                  name="Sulphides_Sp"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sp</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="0"
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                control={form.control}
+                name="Sulphides_Cpy"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cpy</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+              control={form.control}
+              name="Sulphides_Po"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Po</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="0"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+              <FormField
+              control={form.control}
+              name="Sulphides_Undiff"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Undiff</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="0"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+
+
+              <h1>BLEACHING</h1>
+
+              <hr></hr>
+              
+
+                <FormField
+                control={form.control}
+                name="Bleaching_Cly"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cly</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+
+                <FormField
+                control={form.control}
+                name="Bleaching_Ser"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ser</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+
+                <FormField
+                control={form.control}
+                name="Bleaching_Alb"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alb</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <hr></hr>
+              
+
+                <FormField
+                control={form.control}
+                name="Silicification"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Silicification</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <hr></hr>
+
+            <h1> VEINLETS %</h1>
+
+            <hr></hr>
+
+                <FormField
+                control={form.control}
+                name="Veinlets_Qz_Po"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Qz-Po {"[Ac-Al]"}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+                  <FormField
+                  control={form.control}
+                  name="Veinlets_Qz_Py"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Qz±Py/{"As[Se]"}</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="0"
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                  <FormField
+                  control={form.control}
+                  name="Veinlets_Py_As"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{"Py/As [Se]"}</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="0"
+                          type="number"
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                    <FormField
+                    control={form.control}
+                    name="Veinlets_Qz_Su"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Qz-Su"}</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                    <FormField
+                    control={form.control}
+                    name="Veinlets_Ca"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Ca"}</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                    <FormField
+                    control={form.control}
+                    name="Veinlets_Qz_Ca"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Qz-Ca"}</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                    <FormField
+                    control={form.control}
+                    name="Veinlets_Sulf"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Sulf"}</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                    <FormField
+                    control={form.control}
+                    name="Veinlets_Qz_Undiff"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Qz undiff"}</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                    <FormField
+                    control={form.control}
+                    name="Veinlets_Bt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Bt"}</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="0"
+                            type="number"
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                
+                <hr></hr>
+
             <FormField
               control={form.control}
               name="Comments"

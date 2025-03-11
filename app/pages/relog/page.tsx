@@ -197,8 +197,9 @@ export default function ReloggingPage() {
       
         <Form {...form}>
 
-      <h1>asd</h1>
-
+      <h1>Tesoro Gold</h1>
+        <h2>Relogging</h2>
+        
         <FormField
         control={form.control}
         name="Project_ID"
@@ -344,7 +345,8 @@ export default function ReloggingPage() {
               )}
             />
 
-              <h1>spltit</h1>
+              <h1>QZ</h1>
+              <hr></hr>
 
             {/* Campo Natural_Break_Count */}
 
